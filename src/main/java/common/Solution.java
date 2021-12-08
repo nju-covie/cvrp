@@ -51,6 +51,7 @@ public class Solution {
 
     public void check() {
         Set<Integer> customers = new HashSet<>();
+        Set<Integer> visited = new HashSet<>();
         double totalCost = 0;
         for (int i = 1; i < instance.getNodeNum(); i++) {
             customers.add(i);
@@ -62,6 +63,11 @@ public class Solution {
             }
             int load = 0;
             for (int i = 1; i < route.getSequence().size(); i++) {
+                if (visited.contains(route.getSequence().get(i)) && route.getSequence().get(i) != 0) {
+                    System.out.printf("visit customer %d more than once", route.getSequence().get(i));
+                    System.exit(0);
+                }
+                visited.add(route.getSequence().get(i));
                 customers.remove(route.getSequence().get(i));
                 load += instance.getDemand().get(route.getSequence().get(i));
                 totalCost += instance.getDistance()[route.getSequence().get(i - 1)][route.getSequence().get(i)];
