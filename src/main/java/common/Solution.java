@@ -49,6 +49,9 @@ public class Solution {
         this.cost = cost;
     }
 
+    /**
+     * check feasibility of the solution
+     */
     public void check() {
         Set<Integer> customers = new HashSet<>();
         Set<Integer> visited = new HashSet<>();
