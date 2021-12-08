@@ -31,8 +31,8 @@ public class TabuSearch implements IAlgorithm{
         Solution bs = s.deepCopy();
 
         System.out.println("Initial cost " + bs.getCost());
-        int relocateTime = 0;
-        int exchangeTime = 0;
+        int relocateFreq = 0;
+        int exchangeFreq = 0;
         double best = s.getCost();
         while (iter < Parameter.MAX_ITER) {
             iter++;
@@ -50,13 +50,13 @@ public class TabuSearch implements IAlgorithm{
                 assert opt1 != null;
                 relocate.updateList(s, opt1, tabuList, iter);
                 relocate.modify(s, opt1);
-                relocateTime++;
+                relocateFreq++;
             }
             else {
                 assert opt2 != null;
                 exchange.updateList(s, opt2, tabuList, iter);
                 exchange.modify(s, opt2);
-                exchangeTime++;
+                exchangeFreq++;
             }
 
             double currentCost = s.getCost();
@@ -71,14 +71,12 @@ public class TabuSearch implements IAlgorithm{
             if (random) {
                 shakeIter++;
             }
-
             if (noImprove >= Parameter.MAX_NON_IMPROVE) {
                 random = true;
                 shakeIter = 0;
                 noImprove = 0;
             }
             System.out.println("iter " + iter + " best cost " + bs.getCost() + " current cost " + s.getCost());
-
             if (shakeIter >= Parameter.SHAKE_TENURE) {
                 random = false;
                 shakeIter = 0;
@@ -87,6 +85,6 @@ public class TabuSearch implements IAlgorithm{
         bs.check();
         s.setRoutes(bs.getRoutes());
         s.setCost(bs.getCost());
-        System.out.printf("Use relocate operator %d times, exchange operator %d times \n", relocateTime, exchangeTime);
+        System.out.printf("Use relocate operator %d times, exchange operator %d times \n", relocateFreq, exchangeFreq);
     }
 }
