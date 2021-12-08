@@ -89,6 +89,9 @@ public class Instance {
         return distance;
     }
 
+    /**
+     * calculate the distance matrix
+     */
     public void calDistance() {
         distance = new double[nodeNum][nodeNum];
         for (int i = 0; i < nodeNum; i++) {
